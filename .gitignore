@@ -1,3 +1,2 @@
-.idea/
-venv/
-docs/
+frontend/node_modules
+.DS_Store
