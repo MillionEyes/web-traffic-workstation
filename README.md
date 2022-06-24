@@ -5,13 +5,13 @@ A proxy service which shows detailed insights about the user web traffic
 ## Frontend
 A NodeJS app which opens a socket connection to the backend server.
 
-####Setup
 1. Navigate to frontend directory in terminal
 2. Run "npm install"
 3. Run "npm start"
 
 ## Backend
 A Golang server listening for incoming socket connections.
+
 1. Navigate to backend directory in terminal
 2. Run "go run sock.go"
 
