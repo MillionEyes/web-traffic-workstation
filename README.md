@@ -16,7 +16,7 @@ A Golang server listening for incoming socket connections.
 2. Run "go run sock.go"
 
 ## Working
-1. Navigate to http:///localhost:3000
+1. Navigate to http://localhost:3000
 2. All new incoming transport layer connection information will be present on the dashboard and old connection information will be continuosly updated with new information inplace.
 
 
