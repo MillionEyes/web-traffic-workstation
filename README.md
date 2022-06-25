@@ -5,7 +5,7 @@ Watch demo: https://www.youtube.com/watch?v=cbhadeFBu-s
 
 ## Components:
 ## Frontend
-A NodeJS app which opens a socket connection to the backend server.
+A NodeJS app which initiates a socket connection to the backend server.
 
 1. Navigate to frontend directory in terminal
 2. Run "npm install"
