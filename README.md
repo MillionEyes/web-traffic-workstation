@@ -1,6 +1,6 @@
 # web-traffic-workstation
 A proxy service which shows detailed insights about the user web traffic
-![alt text](https://github.com/MillionEyes/web-traffic-workstation/blob/main/recording/Screen%20Recording%202022-06-25%20at%207.14.14%20PM.mov)
+![Watch demo](https://github.com/MillionEyes/web-traffic-workstation/blob/main/recording/Screen%20Recording%202022-06-25%20at%207.14.14%20PM.mov)
 
 ## Components:
 ## Frontend
