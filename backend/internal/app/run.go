@@ -2,6 +2,7 @@ package app
 
 import (
 	"strconv"
+	"strings"
 
 	"github.com/MillionEyes/web-traffic-workstation/backend/pkg/session"
 	"github.com/google/gopacket"
@@ -47,7 +48,8 @@ func transformSessionDetailsToMatrix(sessions []SessionDetails) [][]string {
 			[]string{currentSessionDetails.Session.Client1IP, currentSessionDetails.Session.Client2IP,
 				currentSessionDetails.Session.Client1Port, currentSessionDetails.Session.Client2Port,
 				currentSessionDetails.Session.Protocol, strconv.Itoa(currentSessionDetails.Metrics.TotalPackets),
-				currentSessionDetails.Metrics.StartTime.String(), currentSessionDetails.Metrics.EndTime.String(),
+				strings.ReplaceAll(currentSessionDetails.Metrics.StartTime.String(), " ", "-"),
+				strings.ReplaceAll(currentSessionDetails.Metrics.EndTime.String(), " ", "-"),
 				strconv.Itoa(currentSessionDetails.Metrics.TotalData),
 			},
 		)

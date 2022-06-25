@@ -54,7 +54,7 @@ func Echo(ws *websocket.Conn) {
 		} else {
 			msg = "[]"
 		}
-		fmt.Println("Sending to client: " + msg)
+		// fmt.Println("Sending to client: ")
 
 		if err = websocket.Message.Send(ws, msg); err != nil {
 			fmt.Println("Can't send")

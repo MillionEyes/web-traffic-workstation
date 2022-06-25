@@ -1,32 +1,43 @@
 <!DOCTYPE html>
 <html>
   <head>
-    <title>Socket.IO chat</title>
+    <title>Lice packet Stream</title>
     <style>
       body { margin: 0; padding-bottom: 3rem; font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif; }
-
-      #form { background: rgba(0, 0, 0, 0.15); padding: 0.25rem; position: fixed; bottom: 0; left: 0; right: 0; display: flex; height: 3rem; box-sizing: border-box; backdrop-filter: blur(10px); }
-      #input { border: none; padding: 0 1rem; flex-grow: 1; border-radius: 2rem; margin: 0.25rem; }
-      #input:focus { outline: none; }
-      #form > button { background: #333; border: none; padding: 0 1rem; margin: 0.25rem; border-radius: 3px; outline: none; color: #fff; }
-
       #messages { list-style-type: none; margin: 0; padding: 0; }
       #messages > li { padding: 0.5rem 1rem; }
       #messages > li:nth-child(odd) { background: #efefef; }
     </style>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
   </head>
   <body>
+    <table class="table">
+      <thead>
+        <tr>
+          <th scope="col">Protocol</th>
+          <th scope="col">Client 1 IP</th>
+          <th scope="col">Client 1 Port</th>
+          <th scope="col">Client 2 IP</th>
+          <th scope="col">Client 2 Port</th>
+          <th scope="col">Start Time</th>
+          <th scope="col">End Time</th>
+          <th scope="col">Total packets transferred</th>
+          <th scope="col">Total bytes transferred</th>
+        </tr>
+      </thead>
+      <tbody id="table_body">
+      </tbody>
+    </table>
     <ul id="messages"></ul>
-    <form id="form" action="">
-      <input id="input" autocomplete="off" /><button>Send</button>
-    </form>
 
     <script>
       var wsuri = "ws://127.0.0.1:1234/socket";
       var socket = null;
       socket = new WebSocket(wsuri);
 
-      var dict = {};
+      var table_dict = {};
 
       socket.onopen = function() {
           console.log("connected to " + wsuri);
@@ -37,16 +48,7 @@
       }
 
       var messages = document.getElementById('messages');
-      var form = document.getElementById('form');
-      var input = document.getElementById('input');
-      
-      form.addEventListener('submit', function(e) {
-        e.preventDefault();
-        if (input.value) {
-          socket.send(input.value);
-          input.value = '';
-        }
-      });
+      var table_body = document.getElementById('table_body');
 
       socket.onmessage = function(e) {
         console.log("message received: " + e.data);
@@ -56,22 +58,54 @@
         for (i in jsonObj)
         {
           var keyVal = jsonObj[i]["key"];
-          if (keyVal in dict){
-              dispItem = dict[keyVal]
-              dispItem.textContent = keyVal + " ---- " + jsonObj[i]["val"]
+          const conn_info = keyVal.split(" ");
+          const metrics_info = jsonObj[i]["val"].split(" ");
+          if (keyVal in table_dict){
+              tableDisplayItem = table_dict[keyVal]
+              tableDisplayItem.cells[5].textContent = metrics_info[1]
+              tableDisplayItem.cells[6].textContent = metrics_info[2]
+              tableDisplayItem.cells[7].textContent = metrics_info[0]
+              tableDisplayItem.cells[8].textContent = metrics_info[3]
           } else{
             var item = document.createElement('li');
-            item.textContent = jsonObj[i]["val"];
-            messages.appendChild(item);
+            var table_row = document.createElement('tr');
+
+            var protocol_col = document.createElement('td');
+            var client_1_ip_col = document.createElement('td');
+            var client_1_port_col = document.createElement('td');
+            var client_2_ip_col = document.createElement('td');
+            var client_2_port_col = document.createElement('td');
+            var start_time_col = document.createElement('td');
+            var end_time_col = document.createElement('td');
+            var total_packets_transferred_col = document.createElement('td');
+            var total_bytes_transferred_col = document.createElement('td');
+
+            protocol_col.textContent = conn_info[4]
+            client_1_ip_col.textContent = conn_info[0]
+            client_1_port_col.textContent = conn_info[1]
+            client_2_ip_col.textContent = conn_info[2]
+            client_2_port_col.textContent = conn_info[3]
+            start_time_col.textContent = metrics_info[1]
+            end_time_col.textContent = metrics_info[2]
+            total_packets_transferred_col.textContent = metrics_info[0]
+            total_bytes_transferred_col.textContent = metrics_info[3]
+
+            table_row.appendChild(protocol_col)
+            table_row.appendChild(client_1_ip_col)
+            table_row.appendChild(client_1_port_col)
+            table_row.appendChild(client_2_ip_col)
+            table_row.appendChild(client_2_port_col)
+            table_row.appendChild(start_time_col)
+            table_row.appendChild(end_time_col)
+            table_row.appendChild(total_packets_transferred_col)
+            table_row.appendChild(total_bytes_transferred_col)
+
+            table_body.appendChild(table_row)
+
             window.scrollTo(0, document.body.scrollHeight);
-            dict[keyVal] = item
+            table_dict[keyVal] = table_row
           }
         }
-
-        // var item = document.createElement('li');
-        // item.textContent = e.data;
-        // messages.appendChild(item);
-        // window.scrollTo(0, document.body.scrollHeight);
       }
     </script>
   </body>
