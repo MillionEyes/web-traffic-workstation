@@ -1,5 +1,6 @@
 # web-traffic-workstation
-A proxy service which shows detailed insights about the user web traffic
+A websocket mechanism to display connection related information like start time, end time, number of packets transferred, number of bytes transferred for each connection. This is done via websockets using nodejs as frontend and golang as backend to send data to browser.
+
 ![Watch demo](https://github.com/MillionEyes/web-traffic-workstation/blob/main/recording/Screen%20Recording%202022-06-25%20at%207.14.14%20PM.mov)
 
 ## Components:
