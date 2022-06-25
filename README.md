@@ -1,7 +1,7 @@
 # web-traffic-workstation
 A websocket mechanism to display connection related information like start time, end time, number of packets transferred, number of bytes transferred for each connection. This is done via websockets using nodejs as frontend and golang as backend to send data to browser.
 
-![Watch demo](https://www.youtube.com/watch?v=cbhadeFBu-s)
+Watch demo: https://www.youtube.com/watch?v=cbhadeFBu-s
 
 ## Components:
 ## Frontend
